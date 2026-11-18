@@ -8,7 +8,7 @@ if ! command -v claude >/dev/null 2>&1; then
   exit 1
 fi
 
-marketplace="${TASKFORCE_MARKETPLACE:-rebbix/taskforce-plugin}"
+marketplace="${TASKFORCE_MARKETPLACE:-https://github.com/rebbix/taskforce-plugin.git}"
 
 claude plugin marketplace add "$marketplace"
 claude plugin install taskforce@taskforce
