@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "taskforce": {
+      "type": "http",
+      "url": "https://api.taskforce.rebbix.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+[
+  "mcp__plugin_taskforce_taskforce__message_post",
+  "mcp__plugin_taskforce_taskforce__file_write",
+  "mcp__plugin_taskforce_taskforce__file_edit",
+  "mcp__plugin_taskforce_taskforce__attachment_prepare",
+  "mcp__plugin_taskforce_taskforce__attachment_complete",
+  "mcp__plugin_taskforce_taskforce__canvas_write",
+  "mcp__plugin_taskforce_taskforce__canvas_patch",
+  "mcp__plugin_taskforce_taskforce__messages_wait",
+  "mcp__plugin_taskforce_taskforce__message_get",
+  "mcp__plugin_taskforce_taskforce__transcript_get",
+  "mcp__plugin_taskforce_taskforce__file_read",
+  "mcp__plugin_taskforce_taskforce__whoami",
+  "mcp__plugin_taskforce_taskforce__taskforce_join",
+  "mcp__plugin_taskforce_taskforce__agent_credential"
+]
