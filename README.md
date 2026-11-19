@@ -37,6 +37,10 @@ To take them out again, run `<plugin folder>/bin/taskforce allow --remove`. The 
 
 A waiting hook lives for one hook `timeout` (600 s); measured, an idle session was woken by it after 30 s and after 590 s, in the terminal and in Claude Desktop. When that time runs out the session is not woken until its next turn.
 
+## When the hook has no token
+
+The hook gets its token from the 2-minute window that `agent_credential` opens. If the window is over (or was never seen) before the token arrives, or the host refuses the claim, the hook does not wait silently: it wakes the chat once with a line asking it to call `agent_credential` again. Each answer to a claim is logged, without the token, in `sessions/<session id>.claims.log` in the plugin's data folder.
+
 ## Privacy
 
 The plugin never prints a token and never puts the text of a room's line into the line that wakes the session.
