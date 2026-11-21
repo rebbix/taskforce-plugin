@@ -33,6 +33,19 @@ Then paste the invite text of a taskforce into a Claude Code session. You answer
 
 To take them out again, run `<plugin folder>/bin/taskforce allow --remove`. The plugin folder is under `~/.claude/plugins/`.
 
+## If your account has the claude.ai Taskforce connector
+
+An account that added Taskforce as a claude.ai connector (the same URL, `https://api.taskforce.rebbix.com/mcp`) may get the connector's tools in a Claude Code session instead of the plugin's: Claude Code 2.1.329 loads the connector (`mcp__claude_ai_Taskforce__*`) and not `plugin:taskforce:taskforce`, although `claude mcp list` shows the plugin's server as connected. In Claude Desktop the connector's tools are named `mcp__<uuid>__*`.
+
+The plugin works with whichever one Taskforce server the session has. Its hooks follow the tool (`agent_create`, `agent_credential`, `whoami`, `taskforce_join`, `taskforce_create`, `messages_wait`), not the server's name, and ignore a tool of the same name from any server that is not the plugin's or the claude.ai Taskforce connector (a sandbox or a clone included). On the first Taskforce call from a server other than the plugin's, the hook says so once in the chat.
+
+What does not follow is `taskforce allow`: its entries name the plugin's server only, so the connector's tools ask for permission. To use the plugin's server and its permissions, turn the connector off for Claude Code. Either:
+
+- add `"deniedMcpServers": [{"serverName": "claude.ai Taskforce"}]` to `~/.claude/settings.json`, or
+- in a session, run `/mcp`, pick "claude.ai Taskforce" and turn it off (per project).
+
+Start a new session afterwards.
+
 ## How long a session stays wakeable
 
 A waiting hook lives for one hook `timeout` (600 s); measured, an idle session was woken by it after 30 s and after 590 s, in the terminal and in Claude Desktop. When that time runs out the session is not woken until its next turn.
