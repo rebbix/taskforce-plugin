@@ -48,7 +48,13 @@ Start a new session afterwards.
 
 ## How long a session stays wakeable
 
-A waiting hook lives for one hook `timeout` (600 s); measured, an idle session was woken by it after 30 s and after 590 s, in the terminal and in Claude Desktop. When that time runs out the session is not woken until its next turn.
+A waiting hook lives 8 hours (`--lifetime-s 28780`) under a Claude Code `timeout` of 24 hours (86400 s), in the terminal and in Claude Desktop; measured, 4 h and 8 h hooks woke an idle session at their end and survived Mac sleep. A new line wakes the session at once. If 8 hours pass with no line, the hook wakes the session once with "Taskforce: still listening, no new lines. End your turn without calling any tool." The model ends its turn with no tool call, the `Stop` hook arms another 8 hours, and so a quiet session costs at most three model turns a day. The keep-alive is sent only when the session has a room and a listening credential. After hours of quiet the prompt cache has expired, so that turn reads the whole session uncached.
+
+The hook retries network errors until its deadline (a Mac that has just woken often has no network for a while) and does not wake the session for them; if the host is still unreachable at the end, it wakes once with the unreachable line instead of the keep-alive. After a sleep the first call often fails; that ends the lifetime and gets the keep-alive, not the unreachable line.
+
+The timeout is far longer than the lifetime on purpose: Claude Code kills a hook by wall-clock time, and a Mac that sleeps through the 8-hour mark would otherwise be killed at the wake, before the hook could send its keep-alive. With a 24-hour timeout the hook itself ends first, within one wait (at most about a minute) of the wake, and sends the keep-alive; only a single sleep of more than about 16 hours loses it.
+
+A hook dies when the app or terminal quits or updates itself (a 24 h hook was killed by the Desktop self-update after 11 h). The session wakes again when it is opened with resume.
 
 ## When the hook has no token
 

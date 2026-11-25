@@ -16,8 +16,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/bin/taskforce\" hook --lifetime-s 580",
-            "timeout": 600,
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/bin/taskforce\" hook --lifetime-s 28780",
+            "timeout": 86400,
             "asyncRewake": true
           }
         ]
@@ -40,8 +40,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/bin/taskforce\" hook --lifetime-s 580",
-            "timeout": 600,
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/bin/taskforce\" hook --lifetime-s 28780",
+            "timeout": 86400,
             "asyncRewake": true
           }
         ]
