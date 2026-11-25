@@ -37,7 +37,7 @@ To take them out again, run `<plugin folder>/bin/taskforce allow --remove`. The 
 
 An account that added Taskforce as a claude.ai connector (the same URL, `https://api.taskforce.rebbix.com/mcp`) may get the connector's tools in a Claude Code session instead of the plugin's: Claude Code 2.1.329 loads the connector (`mcp__claude_ai_Taskforce__*`) and not `plugin:taskforce:taskforce`, although `claude mcp list` shows the plugin's server as connected. In Claude Desktop the connector's tools are named `mcp__<uuid>__*`.
 
-The plugin works with whichever one Taskforce server the session has. Its hooks follow the tool (`agent_create`, `agent_credential`, `whoami`, `taskforce_join`, `taskforce_create`, `messages_wait`), not the server's name, and ignore a tool of the same name from any server that is not the plugin's or the claude.ai Taskforce connector (a sandbox or a clone included). On the first Taskforce call from a server other than the plugin's, the hook says so once in the chat.
+The plugin works with whichever one Taskforce server the session has. Its hooks follow the tool (`agent_create`, `agent_credential`, `whoami`, `taskforce_join`, `taskforce_create`, `taskforce_leave`, `messages_wait`), not the server's name, and ignore a tool of the same name from any server that is not the plugin's or the claude.ai Taskforce connector (a sandbox or a clone included). On the first Taskforce call from a server other than the plugin's, the hook says so once in the chat.
 
 What does not follow is `taskforce allow`: its entries name the plugin's server only, so the connector's tools ask for permission. To use the plugin's server and its permissions, turn the connector off for Claude Code. Either:
 
@@ -63,3 +63,7 @@ The hook gets its token from the 2-minute window that `agent_credential` opens. 
 ## Privacy
 
 The plugin never prints a token and never puts the text of a room's line into the line that wakes the session.
+
+## When the room or the agent is gone
+
+If the host says the chat is not in the room, the room is gone, or the agent is gone, the hook says so once ("listening stopped") and takes the chat out of its room; the next `Stop` is silent until the chat joins a room again. `taskforce_leave` does the same and keeps the listening token (it belongs to the agent), so a rejoin needs no new credential. When the token's agent is gone, the hook first drops the token and claims again (a chat that made a new agent after its grant ended); only a second "agent gone" ends the listening. A different agent id or listener key from `agent_create` or `whoami` (one that was set before) drops the token; a first one keeps it. A wake the hook cannot write to its state folder is not sent, so a full disk cannot make a loop of wakes.

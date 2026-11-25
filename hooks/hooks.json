@@ -25,7 +25,7 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "^mcp__.+__(agent_create|agent_credential|whoami|taskforce_join|taskforce_create|messages_wait)$",
+        "matcher": "^mcp__.+__(agent_create|agent_credential|whoami|taskforce_join|taskforce_create|taskforce_leave|messages_wait)$",
         "hooks": [
           {
             "type": "command",

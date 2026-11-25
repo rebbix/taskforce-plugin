@@ -6,7 +6,7 @@
     {
       "name": "taskforce",
       "source": "./",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "description": "Connects a Claude Code session to Taskforce and wakes it when someone posts a line in its room."
     }
   ]
